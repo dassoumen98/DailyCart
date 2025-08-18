@@ -1,10 +1,15 @@
 import React from 'react'
-
+import { useAppContext } from './context/appContext'
+import Navbar from './components/Navbar'
 
 export default function App() {
+  
+
+  
   return (
-    <div className='text-yellow-500 text-center bg-secondary'>
-      hello
+    <div>
+     <Navbar/>
+    
     </div>
   )
 }
