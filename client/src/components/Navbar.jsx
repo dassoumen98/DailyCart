@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useAppContext } from '../context/appContext'
 
+
 export default function Navbar() {
      const [open, setOpen] = React.useState(false)
 
