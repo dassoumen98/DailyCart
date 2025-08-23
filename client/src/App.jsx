@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAppContext } from './context/appContext'
 import Navbar from './components/Navbar'
-import MainBanner from './components/MainBanner'
+import Footer from './components/Footer'
+
 import Home from './pages/Home'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
@@ -12,13 +13,16 @@ const isSellerPath=useLocation().pathname.includes('seller')
   
   return (
     <div>
-     {isSellerPath? null : <Navbar/> } 
+     {isSellerPath ? null : <Navbar/> } 
     <Toaster position="top-right"/>
+
      <div className={ `${isSellerPath ? "" :"px-6 md:px-16 lg:px-24 xl:px-32"}`}>
      <Routes>
         <Route path="/" element={<Home />} />
      </Routes>
      </div>
+
+     {isSellerPath ? null : <Footer/> }
 
     
     </div>
