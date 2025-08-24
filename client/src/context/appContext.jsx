@@ -12,9 +12,9 @@ export const AppContextProvider = ({ children }) => {
     const [showUserLogin, setShowUserLogin]= useState(false)
     const [products, setProducts] = useState([])
     const [cartItems, setCartItems] = useState({})
-    console.log(
-    cartItems
-    );
+    // console.log(
+    // cartItems
+    // );
     
     
     // fetch products from backend
@@ -70,7 +70,12 @@ export const AppContextProvider = ({ children }) => {
 
 
 
-    let value ={navigate , user, setUser, isSeller, setIsSeller ,setShowUserLogin, products,  addToCart, cartItems, updateCart, removeFromCart}
+    let value ={navigate , 
+        user, setUser, 
+        isSeller, setIsSeller ,
+        showUserLogin, setShowUserLogin, 
+        products,  addToCart, cartItems, updateCart, removeFromCart
+    }
     return (
         <AppContext.Provider value={value}>
             {children}

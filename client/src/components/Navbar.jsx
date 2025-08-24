@@ -40,12 +40,12 @@ export default function Navbar() {
                    <img src={assets.cart_icon} alt="cart" className='w-5' />
                     <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">3</button>
                 </div>
-                {!user ? (<button onClick={setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition text-white rounded-full">
+                {!user ? (<button onClick={()=>setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition text-white rounded-full">
                     Login
                 </button>):(
-                    <div className='relative cursor-pointer group'>
+                    <div className='relative cursor-pointer group '>
                         <img src={assets.profile_icon} alt="profile_icon" className='w-10' />
-                        <ul className='absolute top-10 right-0 bg-white shadow-md rounded-md p-4 text-sm w-40 hover:bg-gray-100 hidden group-hover:block'>
+                        <ul className='absolute top-10 right-0 bg-white shadow-md rounded-md p-4 text-sm w-40 hover:bg-gray-100 hidden group-hover:block '>
                             <div className='p-1.5 pl-3 hover:bg-primary/15 cursor-pointer' onClick={()=> navigate('my-orders')}>My Orders</div>
                             <div className='p-1.5 pl-3 hover:bg-primary/15 cursor-pointer' onClick={logout}>Logout</div>
                         </ul>
@@ -63,7 +63,7 @@ export default function Navbar() {
             {open && (
 
             
-            <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm   md:hidden`}>
+            <div className={`${open ? 'flex' : 'hidden'} absolute z-40 top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm   md:hidden`}>
                 <NavLink to='/' className="block" onClick={()=> setOpen(false)}>Home</NavLink>
                 <NavLink to='/products' className="block" onClick={()=> setOpen(false)}>All Products</NavLink>
                 <NavLink to='/' className="block">Contact</NavLink>
