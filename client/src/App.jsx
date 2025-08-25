@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 
 
 import Home from './pages/Home'
+import AllProducts from './pages/AllProducts'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Login from './components/Login'
@@ -27,6 +28,7 @@ const {showUserLogin}=useAppContext()
      <div className={ `${isSellerPath ? "" :"px-6 md:px-16 lg:px-24 xl:px-32"}`}>
      <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<AllProducts />} />
      </Routes>
      </div>
 
