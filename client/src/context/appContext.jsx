@@ -7,14 +7,14 @@ export const AppContext =createContext()
 
 export const AppContextProvider = ({ children }) => {
     const navigate =useNavigate()
-    const [user ,setUser] = useState(false)
+    const [user ,setUser] = useState(false) // user null means not logged in
     const[isSeller, setIsSeller] = useState(false)
     const [showUserLogin, setShowUserLogin]= useState(false)
     const [products, setProducts] = useState([])
     const [cartItems, setCartItems] = useState({})
-    // console.log(
-    // cartItems
-    // );
+    const [searchTerm, setSearchTerm] = useState('')
+
+
     
     
     // fetch products from backend
@@ -74,7 +74,8 @@ export const AppContextProvider = ({ children }) => {
         user, setUser, 
         isSeller, setIsSeller ,
         showUserLogin, setShowUserLogin, 
-        products,  addToCart, cartItems, updateCart, removeFromCart
+        products,  addToCart, cartItems, updateCart, removeFromCart,
+        searchTerm, setSearchTerm
     }
     return (
         <AppContext.Provider value={value}>
