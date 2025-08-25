@@ -10,6 +10,9 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Login from './components/Login'
 
+import ProductCategory from './pages/ProductCategory'
+import ProductDetails from './pages/ProductDetails'
+
 export default function App() {
   
 const isSellerPath=useLocation().pathname.includes('seller')
@@ -29,6 +32,8 @@ const {showUserLogin}=useAppContext()
      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<AllProducts />} />
+        <Route path="/products/:category" element={<ProductCategory />} />
+        <Route path="/products/:category/:id" element={<ProductDetails />} />
      </Routes>
      </div>
 

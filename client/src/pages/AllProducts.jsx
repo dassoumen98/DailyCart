@@ -23,7 +23,7 @@ export default function AllProducts() {
         <p className='text-2xl font-medium  uppercase'>All Products </p>
         <div className='h-0.5 w-16 bg-primary rounded'></div>
     </div>
-    {}
+    
     <div className='mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
         {filteredProducts.length>0 &&(
             filteredProducts.map((product,index)=>(
