@@ -64,6 +64,37 @@ export const AppContextProvider = ({ children }) => {
         toast.success("Product removed from cart")
 
     }
+
+    // cart items count
+    const getCartItemsCount = ()=>{
+        let count=0
+        for(const item in cartItems){
+            // Count UNIQUE product types (how many different products)
+            // if(cartItems[item]>0){
+            //     count ++
+            // }
+
+            // Count TOTAL items in cart (including multiple quantities of the same product)
+            count += cartItems[item]
+        }
+        return count
+    }
+    
+    // total cart price
+    const getTotalCartPrice =()=>{
+        let total=0
+        for(const item in cartItems){
+            const iteminfo =products.find((product)=>product._id===item)
+            if(cartItems[item]>0 && iteminfo){
+                let itemTotal= cartItems[item] * iteminfo.offerPrice
+                total += itemTotal
+            }
+            
+        }
+        return total.toFixed(2)
+    
+    }
+    
         
         
         
@@ -75,7 +106,8 @@ export const AppContextProvider = ({ children }) => {
         isSeller, setIsSeller ,
         showUserLogin, setShowUserLogin, 
         products,  addToCart, cartItems, updateCart, removeFromCart,
-        searchTerm, setSearchTerm
+        searchTerm, setSearchTerm,
+        getCartItemsCount, getTotalCartPrice
     }
     return (
         <AppContext.Provider value={value}>

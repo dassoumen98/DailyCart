@@ -12,7 +12,6 @@ export default function ProductCategory() {
   const filteredProducts=products.filter((product)=>product.category.toLowerCase() === category.toLowerCase())  
   
   
-  console.log(categoryHeader);
   
   return (
     <div className='mt-15 '>
