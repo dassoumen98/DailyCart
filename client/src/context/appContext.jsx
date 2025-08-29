@@ -35,18 +35,27 @@ export const AppContextProvider = ({ children }) => {
             cartdata[itemid] =1
         }
         setCartItems(cartdata)
-        console.log(cartdata)
+        
         toast.success("Product added to cart")
     }
 
     // update cart
-    const updateCart = (itemid, qty) => {
-        const cartdata = structuredClone(cartItems)
-        cartdata[itemid] = qty
-        setCartItems(cartdata)
-        toast.success("Cart updated successfully")
+    // const updateCart = (itemid, qty) => {
+    //     const cartdata = structuredClone(cartItems)
+
+    //     cartdata[itemid] = qty
+    //     setCartItems(cartdata)
+    //     toast.success("Cart updated successfully")
         
-    }
+    // }
+    const updateCart = (itemId, qty) => {
+  setCartItems((prev) => ({
+    ...prev,
+    [itemId]: qty
+  }));
+  toast.success("Cart updated successfully");
+};
+
 
     // remove from cart
     const removeFromCart = (itemid) => {
