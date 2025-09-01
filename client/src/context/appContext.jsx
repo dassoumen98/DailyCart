@@ -100,7 +100,7 @@ export const AppContextProvider = ({ children }) => {
             }
             
         }
-        return total.toFixed(2)
+        return total
     
     }
     

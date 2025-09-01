@@ -2,11 +2,17 @@ import  { useEffect, useState } from 'react';
 import { assets, dummyAddress } from '../assets/assets';
 import { useAppContext } from '../context/appContext';
 const Cart= () => {
-    const { navigate,getCartItemsCount, products, cartItems , updateCart, removeFromCart } = useAppContext()
+    const { navigate,getCartItemsCount, products, cartItems , updateCart, removeFromCart ,getTotalCartPrice } = useAppContext()
+
+    // state to show/hide address change section
     const [showAddress, setShowAddress] = useState(false)
+    // all address related states are dummy for now
     const [address, setAddress] = useState(dummyAddress)
+    // currently selected address
     const [selectdAddress, setSelectedAddress] = useState(dummyAddress[0])
-    const [cartArray, setCartArray] = useState([])
+
+    // array of products in cart with quantity
+    const [cartArray, setCartArray] = useState([ ])
     const [paymentMethod, setPaymentMethod] = useState('COD')
 
     // convert cartItems object to array of objects with product details and quantity
@@ -32,11 +38,21 @@ const Cart= () => {
     }, [cartItems, products])
     
     console.log(cartArray)
-    console.log("cartItems",cartItems);
+    // console.log("cartItems",cartItems);
+
+    // calculate price, tax, total amount
+    let price = getTotalCartPrice()
+    let tax = (getTotalCartPrice()*2)/100
+    let totalAmount = price + tax 
+    console.log(typeof(totalAmount));
+
+    console.log(paymentMethod);
+    
     
 
+
    
-    return products.length > 0 && cartItems ?  (
+    return products.length > 0 && cartItems?  (
         <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
             <div className='flex-1 max-w-4xl'>
                 <h1 className="text-3xl font-medium mb-6">
@@ -91,16 +107,21 @@ const Cart= () => {
                 <div className="mb-6">
                     <p className="text-sm font-medium uppercase">Delivery Address</p>
                     <div className="relative flex justify-between items-start mt-2">
-                        <p className="text-gray-500">No address found</p>
+                    {/* show selectdAddress if have  */}
+                        <p className="text-gray-500">{selectdAddress? `
+                       ${selectdAddress.street},${selectdAddress.city},${selectdAddress.state},${selectdAddress.country}`: "No address found"}</p>
                         <button onClick={() => setShowAddress(!showAddress)} className="text-primary hover:underline cursor-pointer">
                             Change
                         </button>
                         {showAddress && (
                             <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full">
-                                <p onClick={() => setShowAddress(false)} className="text-gray-500 p-2 hover:bg-gray-100">
-                                    New York, USA
-                                </p>
-                                <p onClick={() => setShowAddress(false)} className="text-primary text-center cursor-pointer p-2 hover:bg-primary/10">
+                            {address.map((addr ,index) => (
+                                <p onClick={() =>{ setSelectedAddress(addr);
+                                    setShowAddress(false)}} className="text-gray-500 p-2 hover:bg-gray-100">
+                                    {`${addr.street},${addr.city},${addr.state},${addr.country}`}
+                                </p>))}
+                                
+                                <p onClick={() => navigate('add-address')} className="text-primary text-center cursor-pointer p-2 hover:bg-primary/10">
                                     Add address
                                 </p>
                             </div>
@@ -109,7 +130,7 @@ const Cart= () => {
 
                     <p className="text-sm font-medium uppercase mt-6">Payment Method</p>
 
-                    <select className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
+                    <select onChange={(e)=>setPaymentMethod(e.target.value)} value={paymentMethod} className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
                         <option value="COD">Cash On Delivery</option>
                         <option value="Online">Online Payment</option>
                     </select>
@@ -119,25 +140,34 @@ const Cart= () => {
 
                 <div className="text-gray-500 mt-4 space-y-2">
                     <p className="flex justify-between">
-                        <span>Price</span><span>$20</span>
+                        <span>Price</span><span>{price}</span>
                     </p>
                     <p className="flex justify-between">
                         <span>Shipping Fee</span><span className="text-green-600">Free</span>
                     </p>
                     <p className="flex justify-between">
-                        <span>Tax (2%)</span><span>$20</span>
+                        <span>Tax (2%)</span><span>{tax}</span>
                     </p>
                     <p className="flex justify-between text-lg font-medium mt-3">
-                        <span>Total Amount:</span><span>$20</span>
+                        <span>Total Amount:</span><span>{totalAmount.toFixed(2)}</span>
                     </p>
                 </div>
 
                 <button className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:primary-dull transition">
-                    Place Order
+                    {paymentMethod === "COD" ? "Place Order" : "Proceed to Checkout"}
                 </button>
             </div>
         </div>
-    ) : null
+    ) : (
+        <div className="flex flex-col items-center justify-center h-[70vh] gap-6">
+            <img className="w-15 md:w-48" src={assets.cart_icon} alt="empty cart" />
+            <p className="text-2xl font-medium">Your cart is empty!</p>
+            <button onClick={()=>navigate("/products")} className="cursor-pointer flex items-center gap-2 text-primary font-medium">
+                <img src={assets.arrow_right_icon_colored} alt="arrow icon" />
+                Shop Now    
+            </button>
+        </div>
+    )
 }
 
 export default Cart;
