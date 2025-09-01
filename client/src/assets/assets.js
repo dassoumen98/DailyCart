@@ -796,6 +796,19 @@ export const dummyAddress = [
     country: "IN",
     phone: "1234567890",
   },
+  {
+    _id: "67b5ba0f4ea97f71bbc196a2",
+    userId: "67b5880e4d09769c5ca61644",
+    firstName: "John",
+    lastName: "Doe",
+    email: "jhondoe@gmail.com",
+    street: "456 Another St",
+    city: "Another City",
+    state: "Another State",
+    zipcode: 654321,
+    country: "IN",
+    phone: "0987654321",
+  },
 ];
 
 export const dummyOrders = [
