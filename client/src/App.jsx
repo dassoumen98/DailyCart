@@ -13,6 +13,7 @@ import Login from './components/Login'
 import ProductCategory from './pages/ProductCategory'
 import ProductDetails from './pages/ProductDetails'
 import Cart from './components/Cart'
+import AddAddress from './pages/AddAddress'
 
 export default function App() {
   
@@ -36,6 +37,7 @@ const {showUserLogin}=useAppContext()
         <Route path="/products/:category" element={<ProductCategory />} />
         <Route path="/products/:category/:id" element={<ProductDetails />} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/add-address' element={<AddAddress/>} />
      </Routes>
      </div>
 
