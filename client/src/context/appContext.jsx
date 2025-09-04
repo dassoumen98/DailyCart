@@ -1,4 +1,4 @@
-import { createContext, useContext ,useState } from "react"
+import { createContext, useContext ,useEffect,useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { dummyProducts } from "../assets/assets"
 import { toast } from "react-hot-toast"
@@ -22,7 +22,7 @@ export const AppContextProvider = ({ children }) => {
         setProducts(dummyProducts)
      }
     // call fetch products on component mount
-    useState(() => {
+    useEffect(() => {
         fetchProducts()
     }, [])
 
