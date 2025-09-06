@@ -14,6 +14,7 @@ import ProductCategory from './pages/ProductCategory'
 import ProductDetails from './pages/ProductDetails'
 import Cart from './components/Cart'
 import AddAddress from './pages/AddAddress'
+import MyOrders from './pages/MyOrders'
 
 export default function App() {
   
@@ -38,6 +39,9 @@ const {showUserLogin}=useAppContext()
         <Route path="/products/:category/:id" element={<ProductDetails />} />
         <Route path='/cart' element={<Cart/>} />
         <Route path='/add-address' element={<AddAddress/>} />
+        <Route path='/my-orders' element={<MyOrders/>} />
+
+
      </Routes>
      </div>
 
