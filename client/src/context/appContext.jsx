@@ -8,11 +8,17 @@ export const AppContext =createContext()
 export const AppContextProvider = ({ children }) => {
     const navigate =useNavigate()
     const [user ,setUser] = useState(false) // user null means not logged in
-    const[isSeller, setIsSeller] = useState(false)
     const [showUserLogin, setShowUserLogin]= useState(false)
+    
     const [products, setProducts] = useState([])
     const [cartItems, setCartItems] = useState({})
     const [searchTerm, setSearchTerm] = useState('')
+
+    // seller 
+    const[isSeller, setIsSeller] = useState(true)
+   
+   
+
 
 
     
@@ -103,7 +109,8 @@ export const AppContextProvider = ({ children }) => {
         return total
     
     }
-    
+
+
         
         
         
@@ -112,7 +119,7 @@ export const AppContextProvider = ({ children }) => {
 
     let value ={navigate , 
         user, setUser, 
-        isSeller, setIsSeller ,
+        isSeller, setIsSeller,
         showUserLogin, setShowUserLogin, 
         products,  addToCart, cartItems, updateCart, removeFromCart,
         searchTerm, setSearchTerm,
