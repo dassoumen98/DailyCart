@@ -17,6 +17,9 @@ import AddAddress from './pages/AddAddress'
 import MyOrders from './pages/MyOrders'
 import SellerLogin from './components/seller/SellerLogin'
 import SellerLayout from './pages/seller/SellerLayout'
+import AddProduct from './pages/seller/AddProduct'
+import ProductList from './pages/seller/ProductList'
+import Orders from './pages/seller/Orders'
 
 export default function App() {
   
@@ -46,6 +49,10 @@ const {showUserLogin , isSeller}=useAppContext()
         {/* seller routes */}
         {/* if not login then show  seller login component */}
         <Route path='/seller' element={ isSeller ? <SellerLayout/> :<SellerLogin/>} >
+            <Route index element={isSeller ? <AddProduct/> : null} />
+            <Route path='product-list' element={<ProductList/>} />
+            <Route path='Orders' element={<Orders/>} />
+
 
         </Route>
     
