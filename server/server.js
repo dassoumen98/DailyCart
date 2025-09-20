@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
+import authRoute from './routes/auth.route.js'
 
 const app = express();
 const PORT =process.env.PORT ||8000;
@@ -16,7 +17,9 @@ app.use(cors({
   credentials: true
 })); //to enable cross-origin resource sharing
 
-
+// import routers
+app.use('/api/v1/auth' , authRoute)
+  
 app.get('/',(req,res)=>{
     res.send("Hello from express server");
 });
