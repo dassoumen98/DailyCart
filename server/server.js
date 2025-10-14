@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 import connectDB from './config/db.js';
-import authRoute from './routes/auth.route.js'
+import userRoute from './routes/user.route.js'
 
 const app = express();
 const PORT =process.env.PORT ||8000;
@@ -10,6 +11,7 @@ const PORT =process.env.PORT ||8000;
 // middleware configuration
 app.use(express.json());// to parse json  data from request body
 app.use(cookieParser());// to parse cookies from request headers
+app.use(morgan('dev')) // to log http requests in the console
 
 const allowedOrigins = [ "http://localhost:5173",  ];
 app.use(cors({
@@ -18,7 +20,7 @@ app.use(cors({
 })); //to enable cross-origin resource sharing
 
 // import routers
-app.use('/api/v1/auth' , authRoute)
+app.use('/api/v1/user' , userRoute)
   
 app.get('/',(req,res)=>{
     res.send("Hello from express server");
