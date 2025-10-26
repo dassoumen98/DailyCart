@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import userRoute from './routes/user.route.js'
+import sellerRoute from './routes/seller.route.js'
 
 const app = express();
 const PORT =process.env.PORT ||8000;
@@ -21,6 +22,7 @@ app.use(cors({
 
 // import routers
 app.use('/api/v1/user' , userRoute)
+app.use('/api/v1/seller' , sellerRoute)
   
 app.get('/',(req,res)=>{
     res.send("Hello from express server");
