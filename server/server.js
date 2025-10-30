@@ -5,9 +5,15 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import userRoute from './routes/user.route.js'
 import sellerRoute from './routes/seller.route.js'
+import connectCloudinary from './config/cloudinary.js';
 
 const app = express();
 const PORT =process.env.PORT ||8000;
+
+
+ await connectDB();
+ await connectCloudinary()
+
 
 // middleware configuration
 app.use(express.json());// to parse json  data from request body
@@ -23,14 +29,16 @@ app.use(cors({
 // import routers
 app.use('/api/v1/user' , userRoute)
 app.use('/api/v1/seller' , sellerRoute)
-  
+ 
+
+
 app.get('/',(req,res)=>{
     res.send("Hello from express server");
 });
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
-    connectDB();
+    
 
 });
 
