@@ -6,14 +6,16 @@ import connectDB from './config/db.js';
 import userRoute from './routes/user.route.js'
 import sellerRoute from './routes/seller.route.js'
 import connectCloudinary from './config/cloudinary.js';
+import productRoute from './routes/product.route.js'
+
+ 
 
 const app = express();
 const PORT =process.env.PORT ||8000;
 
-
+ 
  await connectDB();
  await connectCloudinary()
-
 
 // middleware configuration
 app.use(express.json());// to parse json  data from request body
@@ -23,13 +25,14 @@ app.use(morgan('dev')) // to log http requests in the console
 const allowedOrigins = [ "http://localhost:5173",  ];
 app.use(cors({
   origin: allowedOrigins,
-  credentials: true
+  credentials: true  
 })); //to enable cross-origin resource sharing
 
 // import routers
 app.use('/api/v1/user' , userRoute)
-app.use('/api/v1/seller' , sellerRoute)
- 
+app.use('/api/v1/seller' , sellerRoute) 
+app.use('/api/v1/product' , productRoute)
+
 
 
 app.get('/',(req,res)=>{
@@ -42,4 +45,4 @@ app.listen(PORT,()=>{
 
 });
 
-  
+       
