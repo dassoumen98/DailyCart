@@ -14,11 +14,11 @@ const authMiddleware =(req,res,next)=>{
     }
     try {
         const decoded =jwt.verify(token,process.env.JWT_SECRET)
-        // if(decoded.id){
-        //     req.body.userId =decoded.id
+        if(decoded.id){
+            req.body.userId =decoded.id
 
-        // }
-         req.user = decoded; // ✅ safer than using req.body
+        }
+        //  req.user = decoded; // ✅ safer than using req.body
         
         
     
