@@ -7,11 +7,13 @@ import userRoute from './routes/user.route.js'
 import sellerRoute from './routes/seller.route.js'
 import connectCloudinary from './config/cloudinary.js';
 import productRoute from './routes/product.route.js'
+import cartRoute from './routes/cart.route.js'
+import addressRoute from './routes/address.route.js'
 
  
 
 const app = express();
-const PORT =process.env.PORT ||8000;
+const PORT =process.env.PORT ||8000; 
 
  
  await connectDB();
@@ -32,6 +34,8 @@ app.use(cors({
 app.use('/api/v1/user' , userRoute)
 app.use('/api/v1/seller' , sellerRoute) 
 app.use('/api/v1/product' , productRoute)
+app.use('/api/v1/cart' , cartRoute)
+app.use('/api/v1/address' , addressRoute)
 
 
 
