@@ -9,6 +9,7 @@ import connectCloudinary from './config/cloudinary.js';
 import productRoute from './routes/product.route.js'
 import cartRoute from './routes/cart.route.js'
 import addressRoute from './routes/address.route.js'
+import orderRoute from './routes/order.router.js'
 
  
 
@@ -36,6 +37,7 @@ app.use('/api/v1/seller' , sellerRoute)
 app.use('/api/v1/product' , productRoute)
 app.use('/api/v1/cart' , cartRoute)
 app.use('/api/v1/address' , addressRoute)
+app.use('/api/v1/order' , orderRoute)
 
 
 
