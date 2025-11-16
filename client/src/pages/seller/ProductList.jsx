@@ -1,8 +1,30 @@
 import React from 'react'
 import { useAppContext } from '../../context/appContext';
+import toast from 'react-hot-toast';
 
 export default function ProductList() {
-  const {products} = useAppContext();
+  const {products , axios , fetchProducts} = useAppContext();
+
+//   check products inStock status toggle
+    const handleStockToggle = async (id , inStock) => {
+
+        try {
+
+            let {data} = await axios.post('/product/stock', {id, inStock})
+            if(data.success){
+                // fetch products again bcause product stock status changed
+                fetchProducts()
+                toast.success(data.message);
+            }else{
+                console.log(data.message);
+            }
+            
+        } catch (error) {
+            toast.error("Error updating stock status");
+            console.log("Error updating stock status:", error);
+            
+        }
+    }
   return (
     <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll   py-10 flex flex-col justify-between">
             <div className="w-full md:p-10 p-4">
@@ -30,7 +52,7 @@ export default function ProductList() {
                                     <td className="px-4 py-3 max-sm:hidden">${product.offerPrice}</td>
                                     <td className="px-4 py-3">
                                         <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
-                                            <input type="checkbox" className="sr-only peer" defaultChecked={product.inStock} />
+                                            <input type="checkbox" className="sr-only peer" onClick={()=>handleStockToggle(product._id, !product.inStock)} defaultChecked={product.inStock} />
                                             <div className="w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200"></div>
                                             <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
                                         </label>
