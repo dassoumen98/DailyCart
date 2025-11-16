@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { use } from 'react'
 import { useState } from 'react'
 import {assets} from '../../assets/assets'
 import {categories} from '../../assets/assets'
-export default function AddProduct() {
+import toast from 'react-hot-toast';
 
+import { useAppContext } from '../../context/appContext';
+ 
+
+export default function AddProduct() {
+    
+    const {axios}=useAppContext();
     // file 
     const [file, setFile] = useState([]);
     const [name, setName] = useState("");
@@ -16,10 +22,62 @@ export default function AddProduct() {
     
     
 
-    const onSubmitHandeler = (e) => {
-        e.preventDefault();
+    const onSubmitHandeler = async(e) => {
+
+        try {
+             e.preventDefault();
         // Handle form submission logic here 
+        const formData = new FormData();
+        let  productData={
+        name,
+        description:description.split('\n'),
+        category,
+        price,
+        offerPrice
+    }
+        formData.append('productData', JSON.stringify(productData));
+        for(let i=0; i<file.length; i++){
+            formData.append('images', file[i]);
+        }
+
+        // send formData to backend using fetch or axios
+         let {data} =await axios.post('product/add-product', formData)
+         if(data?.success){
+            toast.success(data.message)
+            setName("")
+            setDescription("")
+            setCategory("")
+            setPrice("")
+            setOfferPrice("")
+            setFile([])
+            }else{
+                toast.error(data.message)
+            }
+
+
+        // console.log("--- Form Data Contents ---");
+        //     for (const [key, value] of formData.entries()) {
+        //         if (key === 'images') {
+        //             // For files, log their name/type instead of the whole file object
+        //             console.log(`${key}: ${value.name} (${value.type})`);
+        //         } else if (key === 'productData') {
+        //             // Log the parsed JSON for easier viewing
+        //             console.log(`${key}:`, JSON.parse(value));
+        //         } else {
+        //             console.log(`${key}: ${value}`);
+        //         }
+        //     }
+           
+       
         
+        
+        
+            
+        } catch (error) {
+            console.log("Error submitting form:", error);
+            
+        }
+       
 
 
 

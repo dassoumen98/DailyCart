@@ -2,7 +2,12 @@ import { createContext, useContext ,useEffect,useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { dummyProducts } from "../assets/assets"
 import { toast } from "react-hot-toast"
+import axios from "axios"
 export const AppContext =createContext()
+
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
+axios.defaults.withCredentials = true; // optional, if using cookies
+
 
 
 export const AppContextProvider = ({ children }) => {
@@ -15,21 +20,52 @@ export const AppContextProvider = ({ children }) => {
     const [searchTerm, setSearchTerm] = useState('')
 
     // seller 
-    const[isSeller, setIsSeller] = useState(true)
+    const[isSeller, setIsSeller] = useState(false)
    
    
 
 
-
+    //seler login or not chekc
+    const fetchSellerStatus = async()=>{
+        try {
+            let res = await axios.get('/seller/isauth')
+            
+            if(res.data.success){
+                setIsSeller(true)
+            }else{
+                setIsSeller(false)
+            }
+        }   catch (error) {
+            setIsSeller(false)                     
+            console.log("Error fetching seller status:", error);
+        }
+    }
+ 
     
     
     // fetch products from backend
      const fetchProducts = async () => {
-        setProducts(dummyProducts)
+        try {
+            let {data} = await axios.get('product/list')
+            console.log(data);
+            
+            if(data?.success){
+                setProducts(data.products)
+            }else{
+                toast.error(data.message)
+            }
+
+            
+        } catch (error) {
+            toast.error("Error fetching products")
+            console.log("Error fetching products:", error);
+            
+        }
      }
     // call fetch products on component mount
     useEffect(() => {
         fetchProducts()
+        fetchSellerStatus()
     }, [])
 
     // add to cart
@@ -123,7 +159,9 @@ export const AppContextProvider = ({ children }) => {
         showUserLogin, setShowUserLogin, 
         products,  addToCart, cartItems, updateCart, removeFromCart,
         searchTerm, setSearchTerm,
-        getCartItemsCount, getTotalCartPrice
+        getCartItemsCount, getTotalCartPrice,
+        axios ,fetchProducts
+
     }
     return (
         <AppContext.Provider value={value}>

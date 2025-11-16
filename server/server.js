@@ -25,7 +25,7 @@ app.use(express.json());// to parse json  data from request body
 app.use(cookieParser());// to parse cookies from request headers
 app.use(morgan('dev')) // to log http requests in the console
 
-const allowedOrigins = [ "http://localhost:5173",  ];
+const allowedOrigins = [ "http://localhost:5173",];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true  
