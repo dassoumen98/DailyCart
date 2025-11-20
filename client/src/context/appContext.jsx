@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true; // optional, if using cookies
 export const AppContextProvider = ({ children }) => {
     const navigate =useNavigate()
     const [user ,setUser] = useState(false) // user null means not logged in
-    const [showUserLogin, setShowUserLogin]= useState(false)
+    const [showUserLogin, setShowUserLogin]= useState(false) // to show user login form 
     
     const [products, setProducts] = useState([])
     const [cartItems, setCartItems] = useState({})
@@ -36,20 +36,40 @@ export const AppContextProvider = ({ children }) => {
                 setIsSeller(false)
             }
         }   catch (error) {
-            setIsSeller(false)                     
-            console.log("Error fetching seller status:", error);
+            setIsSeller(false)                    
+            console.error("Error fetching seller status:", error);
+            
+        }
+    }
+
+    // fetch authentic user
+    const fetchAuthUser = async()=>{
+        try {
+            let {data} = await axios.get('/user/isauth')
+            console.log(data);
+            
+            
+            if(data?.success){
+                setUser(data.user)
+                setCartItems(data.user.cart || {})
+            }else{
+                setUser(false)
+            }
+        } catch (error) {
+            setUser(null)
+            console.log("Error fetching auth user:", error);
         }
     }
  
+
     
     
     // fetch products from backend
      const fetchProducts = async () => {
         try {
             let {data} = await axios.get('product/list')
-            console.log(data);
             
-            if(data?.success){
+            if(data?.success ){
                 setProducts(data.products)
             }else{
                 toast.error(data.message)
@@ -66,6 +86,7 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         fetchProducts()
         fetchSellerStatus()
+        fetchAuthUser()
     }, [])
 
     // add to cart

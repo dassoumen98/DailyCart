@@ -121,8 +121,8 @@ export const loginController = async (req, res) => {
 export const isAuth = async (req, res) => {
     try {
       //  const userId =req.body.userId
-       const userId = req.user.id;  // ✅ cleaner and safer than using req.body
-       console.log(userId);
+        const userId = req.user.id;  // ✅ cleaner and safer than using req.body
+      //  console.log(userId);
        
         const user = await User.findById(userId).select('-password');
         if (!user) {  
