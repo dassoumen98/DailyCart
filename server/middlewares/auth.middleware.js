@@ -3,6 +3,8 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 const authMiddleware =(req,res,next)=>{
     const token =req.cookies.token
+ 
+    
    
     
     if(!token){
@@ -13,12 +15,28 @@ const authMiddleware =(req,res,next)=>{
 
     }
     try {
-        const decoded =jwt.verify(token,process.env.JWT_SECRET)
+        let decoded =jwt.verify(token,process.env.JWT_SECRET)
+      
+        
         if(decoded.id){
-            req.body.userId =decoded.id
+            
+            
+            // req.body.userId =decoded.id
+        
+            
+             req.user = { id: decoded.id }; // ✅ safer than using req.body
+            //  console.log(req.user.id);
+             
 
+          
+            
+
+        }else{
+            return res.status(401).send({
+                success:false,
+                message:'Invalid token'
+            })
         }
-        //  req.user = decoded; // ✅ safer than using req.body
         
         
     

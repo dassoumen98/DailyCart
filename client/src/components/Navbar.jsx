@@ -2,14 +2,31 @@ import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useAppContext } from '../context/appContext'
+import toast from 'react-hot-toast'
 
 
 export default function Navbar() {
      const [open, setOpen] = React.useState(false)
 
-     const {user , setUser, navigate, setShowUserLogin, searchTerm, setSearchTerm , getCartItemsCount}= useAppContext()
+     const {user , setUser, navigate, setShowUserLogin, searchTerm, setSearchTerm , getCartItemsCount ,axios}= useAppContext()
     
     const logout = async()=>{
+
+        try {
+            let {data} =await axios.get('/user/logout')
+            if(data?.success){
+                setUser(null)
+                navigate('/')
+            }
+            
+        } catch (error) {
+            // console.error("Error during logout:", error);
+            toast.error("Failed to logout. Please try again.")
+            
+        }
+
+
+
         setUser(null)
         navigate('/')
 
