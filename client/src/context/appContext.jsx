@@ -51,7 +51,7 @@ export const AppContextProvider = ({ children }) => {
             
             if(data?.success){
                 setUser(data.user)
-                setCartItems(data.user.cart || {})
+                setCartItems(data.user.cartItems)
             }else{
                 setUser(false)
             }
@@ -88,6 +88,9 @@ export const AppContextProvider = ({ children }) => {
         fetchSellerStatus()
         fetchAuthUser()
     }, [])
+
+
+   
 
     // add to cart
     const addToCart = (itemid) => {
@@ -168,7 +171,27 @@ export const AppContextProvider = ({ children }) => {
     }
 
 
-        
+ // update cart in backend whenever cartItems change
+    useEffect(() => {
+        const updateCartInBackend = async () => {
+            try {
+                let { data } = await axios.post('/cart/update', {
+                    cartItems
+                });
+                // console.log(data);
+                
+                if(!data.success){
+                    toast.error(data.message)
+                }
+               
+            } catch (error) {
+                console.error("Error updating cart in backend:", error);
+            }
+        };
+        if(user){
+            updateCartInBackend();
+        }
+    }, [cartItems]);
         
         
 

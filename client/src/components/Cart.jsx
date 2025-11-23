@@ -37,16 +37,16 @@ const Cart= () => {
        
     }, [cartItems, products])
     
-    console.log(cartArray)
+    // console.log(cartArray)
     // console.log("cartItems",cartItems);
 
     // calculate price, tax, total amount
     let price = getTotalCartPrice()
     let tax = (getTotalCartPrice()*2)/100
     let totalAmount = price + tax 
-    console.log(typeof(totalAmount));
+    // console.log(typeof(totalAmount));
 
-    console.log(paymentMethod);
+    // console.log(paymentMethod);
     
     
 
