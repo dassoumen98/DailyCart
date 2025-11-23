@@ -1,15 +1,16 @@
 import  { useEffect, useState } from 'react';
 import { assets, dummyAddress } from '../assets/assets';
 import { useAppContext } from '../context/appContext';
+import { toast } from 'react-hot-toast';
 const Cart= () => {
-    const { navigate,getCartItemsCount, products, cartItems , updateCart, removeFromCart ,getTotalCartPrice } = useAppContext()
+    const { navigate,getCartItemsCount, products, cartItems , updateCart, removeFromCart ,getTotalCartPrice, user, axios } = useAppContext()
 
     // state to show/hide address change section
     const [showAddress, setShowAddress] = useState(false)
     // all address related states are dummy for now
-    const [address, setAddress] = useState(dummyAddress)
+    const [address, setAddress] = useState([])
     // currently selected address
-    const [selectdAddress, setSelectedAddress] = useState(dummyAddress[0])
+    const [selectdAddress, setSelectedAddress] = useState(null)
 
     // array of products in cart with quantity
     const [cartArray, setCartArray] = useState([ ])
@@ -30,12 +31,44 @@ const Cart= () => {
         setCartArray(cartData)
 
     }
+    // fetch user address from server
+    const getUserAddress = async () => {
+        try {
+            const { data } = await axios.get('/address/get');
+            console.log(data);
+            
+            if (data?.success) {
+                setAddress(data?.addresses);
+                // set first address as selected by default
+                if(data?.addresses.length > 0){
+                    setSelectedAddress(data?.addresses[0]);
+                }   
+            } else {
+                toast.error(data?.message);
+            }   
+
+            
+            
+        } catch (error) {
+            console.error(error);
+            
+            toast.error(error.message);
+        }
+    }
+
+
     useEffect(() => {   
         if(products.length > 0 && cartItems){
             getCartData()
         }
        
     }, [cartItems, products])
+
+    useEffect(() => {
+        if(user){
+            getUserAddress();
+        }
+    }, [user]);
     
     // console.log(cartArray)
     // console.log("cartItems",cartItems);
