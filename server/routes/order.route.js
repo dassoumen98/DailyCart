@@ -7,4 +7,4 @@ const router = express.Router();
 router.post('/cod',  authMiddleware,palaceOrderCOD);
 router.get('/user', authMiddleware, getUserOrders);
 router.get('/seller',sellerMiddleware ,getAllOrders);
-export default router;
+export default router; 

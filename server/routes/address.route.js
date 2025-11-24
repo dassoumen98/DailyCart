@@ -4,5 +4,5 @@ import { addAddressController,getAddressesController } from '../controllers/addr
 
 const router = express.Router();
 router.post('/add',authMiddleware, addAddressController);
-router.post('/get',authMiddleware, getAddressesController);
+router.get('/get',authMiddleware, getAddressesController);
 export default router;

@@ -1,15 +1,16 @@
-import  { useEffect, useState } from 'react';
+import  { use, useEffect, useState } from 'react';
 import { assets, dummyAddress } from '../assets/assets';
 import { useAppContext } from '../context/appContext';
+import { toast } from 'react-hot-toast';
 const Cart= () => {
-    const { navigate,getCartItemsCount, products, cartItems , updateCart, removeFromCart ,getTotalCartPrice } = useAppContext()
+    const { navigate,getCartItemsCount, products, cartItems , updateCart, removeFromCart ,getTotalCartPrice, user, axios ,setCartItems} = useAppContext()
 
     // state to show/hide address change section
     const [showAddress, setShowAddress] = useState(false)
     // all address related states are dummy for now
-    const [address, setAddress] = useState(dummyAddress)
+    const [address, setAddress] = useState([])
     // currently selected address
-    const [selectdAddress, setSelectedAddress] = useState(dummyAddress[0])
+    const [selectedAddress, setSelectedAddress] = useState(null)
 
     // array of products in cart with quantity
     const [cartArray, setCartArray] = useState([ ])
@@ -30,14 +31,82 @@ const Cart= () => {
         setCartArray(cartData)
 
     }
+    // fetch user address from server
+    const getUserAddress = async () => {
+        try {
+            const { data } = await axios.get('/address/get');
+            console.log(data);
+            
+            if (data?.success) {
+                setAddress(data?.addresses);
+                // set first address as selected by default
+                if(data?.addresses.length > 0){
+                    setSelectedAddress(data?.addresses[0]);
+                }   
+            } else {
+                toast.error(data?.message);
+            }   
+
+            
+            
+        } catch (error) {
+            console.error(error);
+            
+            toast.error(error.message);
+        }
+    }
+
+     const placeOrder = async () => {
+        try {
+            if(!selectedAddress){
+                toast.error("Please select a delivery address");
+                return;
+            }
+            if(paymentMethod === "COD"){
+                const {data} = await axios.post('/order/cod',{
+                    userId: user._id,
+                    items: cartArray.map((item)=>({product: item._id,quantity: item.quantity})),
+                    address: selectedAddress._id
+
+                });
+                console.log(data)
+                
+                if(data?.success){
+                    toast.success(data?.message);
+                    setCartItems({});
+                    navigate('/my-orders');
+                }else{
+                    toast.error(data?.message);
+                }
+                   
+                   
+
+            }
+
+            
+        } catch (error) {
+            console.error(error);
+            toast.error( error?.response?.data?.message || error.message);
+            
+        }
+    }
+        
+
+
     useEffect(() => {   
         if(products.length > 0 && cartItems){
             getCartData()
         }
        
     }, [cartItems, products])
+
+    useEffect(() => {
+        if(user){
+            getUserAddress();
+        }
+    }, [user]);
     
-    // console.log(cartArray)
+    console.log(cartArray)
     // console.log("cartItems",cartItems);
 
     // calculate price, tax, total amount
@@ -107,9 +176,9 @@ const Cart= () => {
                 <div className="mb-6">
                     <p className="text-sm font-medium uppercase">Delivery Address</p>
                     <div className="relative flex justify-between items-start mt-2">
-                    {/* show selectdAddress if have  */}
-                        <p className="text-gray-500">{selectdAddress? `
-                       ${selectdAddress.street},${selectdAddress.city},${selectdAddress.state},${selectdAddress.country}`: "No address found"}</p>
+                    {/* show selectedAddress if have  */}
+                        <p className="text-gray-500">{selectedAddress? `
+                       ${selectedAddress.street},${selectedAddress.city},${selectedAddress.state},${selectedAddress.country}`: "No address found"}</p>
                         <button onClick={() => setShowAddress(!showAddress)} className="text-primary hover:underline cursor-pointer">
                             Change
                         </button>
@@ -153,7 +222,7 @@ const Cart= () => {
                     </p>
                 </div>
 
-                <button className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:primary-dull transition">
+                <button onClick={placeOrder} className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:primary-dull transition">
                     {paymentMethod === "COD" ? "Place Order" : "Proceed to Checkout"}
                 </button>
             </div>
