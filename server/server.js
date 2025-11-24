@@ -9,7 +9,7 @@ import connectCloudinary from './config/cloudinary.js';
 import productRoute from './routes/product.route.js'
 import cartRoute from './routes/cart.route.js'
 import addressRoute from './routes/address.route.js'
-import orderRoute from './routes/order.router.js'
+import orderRoute from './routes/order.route.js'
 
  
 
