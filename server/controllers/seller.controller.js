@@ -14,7 +14,7 @@ export const sellerLoginController = async (req, res) => {
 
             const sellerToken =jwt.sign({email},process.env.JWT_SECRET,{expiresIn:'7d'})
              
-            res.cookie("token", sellerToken, {
+            res.cookie("sellerToken", sellerToken, {
             httpOnly: true,  // JS can't access cookie
             secure: process.env.NODE_ENV === "production", // only https in prod
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // CSRF protection
@@ -62,7 +62,7 @@ export const sellerIsAuthController = async (req, res) => {
 // seller logout controller
 export const sellerLogoutController = async (req, res) => {
     try {
-        res.clearCookie("token", {
+        res.clearCookie("sellerToken", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",

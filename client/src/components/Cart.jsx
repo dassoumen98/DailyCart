@@ -11,7 +11,8 @@ const Cart= () => {
     const [address, setAddress] = useState([])
     // currently selected address
     const [selectedAddress, setSelectedAddress] = useState(null)
-
+     console.log(selectedAddress);
+     
     // array of products in cart with quantity
     const [cartArray, setCartArray] = useState([ ])
     const [paymentMethod, setPaymentMethod] = useState('COD')
