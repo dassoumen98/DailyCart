@@ -1,20 +1,45 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import {dummyOrders } from '../assets/assets'
+import { useAppContext } from '../context/appContext'
+import toast from 'react-hot-toast'
 
 
 export default function MyOrders() {
+    const {axios,user} = useAppContext();
     const [myOrders, setMyOrders] = useState([])
     const fetchMyOrders = async () => {
         // fetch orders from backend
-        // setMyOrders(data)
-        setMyOrders(dummyOrders)
+        try {
+            let {data} =await axios.get('/order/user');
+            console.log(data);
+            
+            if(data?.success){
+                setMyOrders(data.orders)
+            }
+
+            
+        } catch (error) {
+            console.error(error);
+            toast.error("Error fetching orders")
+
+            
+            
+            
+        }
+        
+
+        
     }
     useEffect(() => {
-        fetchMyOrders(dummyOrders)
-    }, [])
+        if(user){
+            fetchMyOrders()
 
-    console.log(myOrders);
+        }
+        
+    }, [user])
+
+   
     
   return (
     <div className='mt-15 '>

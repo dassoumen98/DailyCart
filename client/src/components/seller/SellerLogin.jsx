@@ -18,7 +18,7 @@ export default function SellerLogin() {
         try {
             e.preventDefault();
             let res = await axios.post('/seller/login',{email,password})
-            console.log();
+            
             
             if(res.data.success){
                 setIsSeller(true);

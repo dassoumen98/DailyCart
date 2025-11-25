@@ -3,7 +3,9 @@ dotenv.config()
 import jwt from 'jsonwebtoken';
 const sellerMiddleware = (req, res, next) => {
     try {
-        const{sellerToken} = req.cookies;
+        const {sellerToken} = req.cookies;
+        // console.log(sellerToken);
+        
         if(!sellerToken){
             return res.status(401).send({
                 success:false,
