@@ -20,6 +20,7 @@ import SellerLayout from './pages/seller/SellerLayout'
 import AddProduct from './pages/seller/AddProduct'
 import ProductList from './pages/seller/ProductList'
 import Orders from './pages/seller/Orders'
+import Loading from './components/Loading'
 
 export default function App() {
   
@@ -45,6 +46,8 @@ const {showUserLogin , isSeller}=useAppContext()
         <Route path='/cart' element={<Cart/>} />
         <Route path='/add-address' element={<AddAddress/>} />
         <Route path='/my-orders' element={<MyOrders/>} />
+        <Route path='/loader' element={<Loading/>} />
+
 
         {/* seller routes */}
         {/* if not login then show  seller login component */}
