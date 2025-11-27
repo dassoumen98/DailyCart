@@ -10,6 +10,7 @@ import productRoute from './routes/product.route.js'
 import cartRoute from './routes/cart.route.js'
 import addressRoute from './routes/address.route.js'
 import orderRoute from './routes/order.route.js'
+import { stripeWebhook } from './controllers/order.controller.js';
 
  
 
@@ -31,6 +32,7 @@ app.use(cors({
   credentials: true  
 })); //to enable cross-origin resource sharing
 
+app.post('/stripe', express.raw({type:'application/json'}), stripeWebhook )
 // import routers
 app.use('/api/v1/user' , userRoute)
 app.use('/api/v1/seller' , sellerRoute) 
@@ -51,4 +53,4 @@ app.listen(PORT,()=>{
 
 });
 
-       
+        
