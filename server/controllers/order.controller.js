@@ -56,7 +56,8 @@ export const palaceOrderCOD = async (req, res) => {
 // place order online payment stripe /api/orders/stripe
 export const palaceOrderStripe=async(req,res)=>{
     try {
-        const { userId , address, items ,} = req.body;
+        const userId = req.user.id; 
+        const {address, items ,} = req.body;
         const {origin} = req.headers;
 
          if( !address  || items.length === 0){
