@@ -66,7 +66,7 @@ export const sellerLogoutController = async (req, res) => {
         res.clearCookie("sellerToken", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         });
         return res.status(200).send({
             success: true,

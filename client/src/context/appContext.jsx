@@ -6,6 +6,8 @@ import axios from "axios"
 export const AppContext =createContext()
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
+
+
 axios.defaults.withCredentials = true; // optional, if using cookies
 
 
@@ -67,7 +69,7 @@ export const AppContextProvider = ({ children }) => {
     // fetch products from backend
      const fetchProducts = async () => {
         try {
-            let {data} = await axios.get('product/list')
+            let {data} = await axios.get('/product/list')
             
             if(data?.success ){
                 setProducts(data.products)
