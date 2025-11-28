@@ -21,6 +21,8 @@ const PORT =process.env.PORT ||8000;
  await connectDB();
  await connectCloudinary()
 
+ app.post('/stripe', express.raw({type:'application/json'}), stripeWebhook )
+
 // middleware configuration
 app.use(express.json());// to parse json  data from request body
 app.use(cookieParser());// to parse cookies from request headers
@@ -32,7 +34,7 @@ app.use(cors({
   credentials: true  
 })); //to enable cross-origin resource sharing
 
-app.post('/stripe', express.raw({type:'application/json'}), stripeWebhook )
+
 // import routers
 app.use('/api/v1/user' , userRoute)
 app.use('/api/v1/seller' , sellerRoute) 
