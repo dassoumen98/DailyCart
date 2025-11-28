@@ -21,7 +21,7 @@ const PORT =process.env.PORT ||8000;
  await connectDB();
  await connectCloudinary()
 
- app.post('/stripe', express.raw({type:'application/json'}), stripeWebhook )
+app.post('/stripe', express.raw({type:'application/json'}), stripeWebhook )
 
 // middleware configuration
 app.use(express.json());// to parse json  data from request body
