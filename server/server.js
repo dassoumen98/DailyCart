@@ -24,6 +24,7 @@ await connectCloudinary()
  
 const allowedOrigins = [ 
     'http://localhost:5173',
+    'https://dailycart-client.vercel.app'
 ]
 // middleware configuration
 app.use(express.json());// to parse json  data from request body
