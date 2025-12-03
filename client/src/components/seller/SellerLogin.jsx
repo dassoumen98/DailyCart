@@ -1,0 +1,82 @@
+import React, { use } from 'react'
+import { useAppContext } from '../../context/appContext'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast';
+
+export default function SellerLogin() {
+
+    const {isSeller, setIsSeller ,navigate, axios} = useAppContext();
+
+     const [state, setState] = React.useState("login");
+    const [name, setName] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+
+   
+    
+    
+    const onSubmitHandler = async(e) => {
+        try {
+            e.preventDefault();
+            let res = await axios.post('api/seller/login',{email,password})
+            
+            
+            if(res.data.success){
+                setIsSeller(true);
+                console.log(data.success);
+                navigate('/seller')
+                
+
+            }else{
+               
+                toast.error(res.data.message)
+            }
+
+            
+        } catch (error) {
+            
+            
+            toast.error(error.response.data.message)
+
+            
+        }
+        
+
+        
+         
+    }
+    useEffect(() => {
+        if(isSeller){
+            navigate('/seller')
+        }
+    }, [isSeller])
+
+
+
+  return !isSeller && (
+    <form onSubmit={onSubmitHandler} className='min-h-screen flex items-center text-sm text-gray-600'>
+      <div className='flex flex-col gap-5 m-auto items-start p-8 py-12 min-w-80 sm:min-w-88 rounded-lg shadow-xl border border-gray-200'>
+        <p className='text-2xl font-medium m-auto'>
+            <span className='text-primary-dull'>
+                Seller {" "}
+            </span>
+            Login
+        </p>
+        <div className='w-full'>
+            <p>Email:</p>
+            <input onChange={(e) => setEmail(e.target.value)} value={email}
+                type='email' placeholder='Enter Email' required className='border border-gray-200 
+                rounded w-full p-2 mt-1 outline-primary' />
+        </div>
+        <div className='w-full'>
+            <p>Password:</p>
+            <input onChange={(e) => setPassword(e.target.value)} value={password} 
+                type='password' placeholder='Enter Password' required className='border border-gray-200 
+                rounded w-full p-2 mt-1 outline-primary' />
+        </div>
+        <button className='bg-primary-dull text-white w-full py-2 rounded-md cursor-pointer'>Login</button>
+      </div>
+    </form>
+  )
+}
+

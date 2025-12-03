@@ -1,0 +1,44 @@
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectCloudinary from './config/cloudinary.js';
+
+import connectDB from './config/db.js';
+import userRouter from './routes/userRoute.js';
+import sellerRouter from './routes/sellerRoute.js';
+import productRouter from './routes/productRoute.js';
+import cartRouter from './routes/cartRouter.js';
+import addressRouter from './routes/addressRoute.js';
+import orderRouter from './routes/orderRoute.js';
+dotenv.config();
+
+
+const app = express();
+const port = process.env.PORT||5000;
+
+await connectDB()
+await connectCloudinary()
+
+ 
+const allowedOrigins = [ 
+    'http://localhost:5173',
+]
+// middleware configuration
+app.use(express.json());// to parse json  data from request body
+app.use(cookieParser());// to parse cookies from request headers
+app.use(morgan('dev')) // to log http requests in the console
+app.use(cors({origin:allowedOrigins,credentials:true}));// to enable CORS for specified origins
+
+app.get('/', (req, res) => res.send("API is Working"));
+app.use('/api/user', userRouter);
+app.use('/api/seller', sellerRouter);
+app.use('/api/product', productRouter); // to serve static files from uploads folder
+app.use('/api/cart', cartRouter)
+app.use('/api/address', addressRouter)
+app.use('/api/order', orderRouter)
+
+app.listen(port, ()=>{
+console.log(`Server is running on http://localhost:${port}`);
+})   
