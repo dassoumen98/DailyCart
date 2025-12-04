@@ -30,7 +30,12 @@ const allowedOrigins = [
 app.use(express.json());// to parse json  data from request body
 app.use(cookieParser());// to parse cookies from request headers
 app.use(morgan('dev')) // to log http requests in the console
-app.use(cors({origin:allowedOrigins,credentials:true}));// to enable CORS for specified origins
+app.use(cors({
+    origin:allowedOrigins,
+    credentials:true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));// to enable CORS for specified origins
 
 app.get('/', (req, res) => res.send("API is Working"));
 app.use('/api/user', userRouter);
