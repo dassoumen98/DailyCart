@@ -13,7 +13,7 @@ const Login = () => {
 
         try {
              e.preventDefault();
-             let {data} =await axios.post(`api/user/${state}`,{
+             let {data} =await axios.post(`/api/user/${state}`,{
                 name,
                 email, password
                 })

@@ -13,7 +13,7 @@ export default function Navbar() {
     const logout = async()=>{
 
         try {
-            let {data} =await axios.get('api/user/logout')
+            let {data} =await axios.get('/api/user/logout')
             if(data?.success){
                 setUser(null)
                 navigate('/')
@@ -24,11 +24,6 @@ export default function Navbar() {
             toast.error("Failed to logout. Please try again.")
             
         }
-
-
-
-        setUser(null)
-        navigate('/')
 
     }
   

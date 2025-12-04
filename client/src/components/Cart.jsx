@@ -35,7 +35,7 @@ const Cart= () => {
     // fetch user address from server
     const getUserAddress = async () => {
         try {
-            const { data } = await axios.get('api/address/get');
+            const { data } = await axios.get('/api/address/get');
             console.log(data);
             
             if (data?.success) {
@@ -64,7 +64,7 @@ const Cart= () => {
                 return;
             }
             if(paymentMethod === "COD"){
-                const {data} = await axios.post('api/order/cod',{
+                const {data} = await axios.post('/api/order/cod',{
                     userId: user._id,
                     items: cartArray.map((item)=>({product: item._id,quantity: item.quantity})),
                     address: selectedAddress._id
@@ -85,7 +85,7 @@ const Cart= () => {
             }
             // online payment
             else{
-                const { data } = await axios.post('api/order/stripe', {
+                const { data } = await axios.post('/api/order/stripe', {
                     userId: user._id,
                     items: cartArray.map(item => ({product: item._id, quantity: item.quantity})),
                     address: selectedAddress._id
