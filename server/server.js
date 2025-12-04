@@ -30,23 +30,12 @@ const allowedOrigins = [
 app.use(express.json());// to parse json  data from request body
 app.use(cookieParser());// to parse cookies from request headers
 app.use(morgan('dev')) // to log http requests in the console
-// app.use(cors({
-//     origin:allowedOrigins,
-//     credentials:true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-//     allowedHeaders: ["Content-Type", "Authorization"]
-// }));// to enable CORS for specified origins
-
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.header('Access-Control-Allow-Origin', origin); // dynamically set origin
-    }
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
+app.use(cors({
+    origin:allowedOrigins,
+    credentials:true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));// to enable CORS for specified origins
 
 app.get('/', (req, res) => res.send("API is Working"));
 app.use('/api/user', userRouter);
@@ -58,4 +47,4 @@ app.use('/api/order', orderRouter)
 
 app.listen(port, ()=>{
 console.log(`Server is running on http://localhost:${port}`);
-})    
+})   
