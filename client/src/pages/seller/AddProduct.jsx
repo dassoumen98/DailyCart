@@ -41,7 +41,7 @@ export default function AddProduct() {
         }
 
         // send formData to backend using fetch or axios
-         let {data} =await axios.post('api/product/add', formData)
+         let {data} =await axios.post('/api/product/add', formData)
          if(data?.success){
             toast.success(data.message)
             setName("")

@@ -10,7 +10,7 @@ export default function ProductList() {
 
         try {
 
-            let {data} = await axios.post('api/product/stock', {id, inStock})
+            let {data} = await axios.post('/api/product/stock', {id, inStock})
             if(data.success){
                 // fetch products again bcause product stock status changed
                 fetchProducts()

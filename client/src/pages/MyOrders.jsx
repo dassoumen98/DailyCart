@@ -11,7 +11,7 @@ export default function MyOrders() {
     const fetchMyOrders = async () => {
         // fetch orders from backend
         try {
-            let {data} =await axios.get('api/order/user');
+            let {data} =await axios.get('/api/order/user');
             console.log(data);
             
             if(data?.success){

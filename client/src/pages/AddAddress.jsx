@@ -37,7 +37,7 @@ export default function AddAddress() {
   const onsubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      let { data } = await axios.post("api/address/add", { address });
+      let { data } = await axios.post("/api/address/add", { address });
       if (data?.success) {
         toast.success(data?.message);
         navigate('/cart');

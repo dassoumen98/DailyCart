@@ -17,7 +17,7 @@ export default function SellerLayout() {
     
     const logout = async () => {
         try {
-             let {data}=await axios.get('api/seller/logout')
+             let {data}=await axios.get('/api/seller/logout')
              console.log(data);
              
             if(data?.success){

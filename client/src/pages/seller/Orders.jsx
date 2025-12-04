@@ -9,7 +9,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([])
   const fetchOrders = async () => {
     try {
-        let {data} = await axios.get('api/order/seller');
+        let {data} = await axios.get('/api/order/seller');
         if(data?.success){
             setOrders(data.orders)
         }else{
