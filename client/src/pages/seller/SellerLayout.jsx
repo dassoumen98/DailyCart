@@ -21,6 +21,7 @@ export default function SellerLayout() {
              console.log(data);
              
             if(data?.success){
+                 toast.success(data.message);
 
                 setIsSeller(false);
                 navigate('/seller');

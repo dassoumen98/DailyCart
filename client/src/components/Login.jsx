@@ -7,7 +7,7 @@ const Login = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const {setShowUserLogin, setUser , axios,navigate} = useAppContext();
+    const {setShowUserLogin, setUser , axios,navigate , fetchAuthUser} = useAppContext();
     
     const onSubmitHandler = async(e) => {
 
@@ -19,8 +19,10 @@ const Login = () => {
                 })
                 if(data.success){
                     navigate('/')
-                    setUser(data.user)
+                    // setUser(data.user)
+                    await fetchAuthUser()
                     setShowUserLogin(false)
+                    
 
                 }else{
                     toast.error(data.message)

@@ -208,7 +208,7 @@ export const AppContextProvider = ({ children }) => {
         products,  addToCart, cartItems, updateCart, removeFromCart,
         searchTerm, setSearchTerm,
         getCartItemsCount, getTotalCartPrice,
-        axios ,fetchProducts,setCartItems
+        axios ,fetchProducts,setCartItems ,fetchAuthUser
 
     }
     return (
