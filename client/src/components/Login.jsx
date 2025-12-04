@@ -7,7 +7,7 @@ const Login = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const {setShowUserLogin, setUser , axios} = useAppContext();
+    const {setShowUserLogin, setUser , axios,navigate} = useAppContext();
     
     const onSubmitHandler = async(e) => {
 
@@ -17,8 +17,8 @@ const Login = () => {
                 name,
                 email, password
                 })
-                if(data?.success){
-
+                if(data.success){
+                    navigate('/')
                     setUser(data.user)
                     setShowUserLogin(false)
 
@@ -29,7 +29,7 @@ const Login = () => {
                     
                 
             } catch (error) {
-                toast.error(error.response?.data?.message || "Something went wrong");
+                toast.error(error.message || "Something went wrong");
                console.error(error);
        
          

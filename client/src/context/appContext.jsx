@@ -5,10 +5,10 @@ import { toast } from "react-hot-toast"
 import axios from "axios"
 export const AppContext =createContext()
 
+axios.defaults.withCredentials = true; // optional, if using cookies
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
 
-axios.defaults.withCredentials = true; // optional, if using cookies
 
 
 
@@ -30,9 +30,11 @@ export const AppContextProvider = ({ children }) => {
     //seler login or not chekc
     const fetchSellerStatus = async()=>{
         try {
-            let res = await axios.get('/api/seller/is-auth')
+            let {data} = await axios.get('/api/seller/is-auth')
+            console.log(data);
             
-            if(res.data.success){
+            
+            if(data.success){
                 setIsSeller(true)
             }else{
                 setIsSeller(false)
@@ -51,12 +53,11 @@ export const AppContextProvider = ({ children }) => {
             console.log(data);
             
             
-            if(data?.success){
+            if(data.success){
                 setUser(data.user)
                 setCartItems(data.user.cartItems)
-            }else{
-                setUser(false)
             }
+            
         } catch (error) {
             setUser(null)
             console.log("Error fetching auth user:", error);
@@ -70,8 +71,9 @@ export const AppContextProvider = ({ children }) => {
      const fetchProducts = async () => {
         try {
             let {data} = await axios.get('/api/product/list')
+            console.log(data);
             
-            if(data?.success ){
+            if(data.success ){
                 setProducts(data.products)
             }else{
                 toast.error(data.message)

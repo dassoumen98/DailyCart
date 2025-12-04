@@ -18,10 +18,10 @@ export default function SellerLogin() {
     const onSubmitHandler = async(e) => {
         try {
             e.preventDefault();
-            let res = await axios.post('api/seller/login',{email,password})
+            let {data} = await axios.post('/api/seller/login',{email,password})
             
             
-            if(res.data.success){
+            if(data.success){
                 setIsSeller(true);
                 console.log(data.success);
                 navigate('/seller')
@@ -29,14 +29,14 @@ export default function SellerLogin() {
 
             }else{
                
-                toast.error(res.data.message)
+                toast.error(data.message)
             }
 
             
         } catch (error) {
             
             
-            toast.error(error.response.data.message)
+            toast.error(error.message)
 
             
         }

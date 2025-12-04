@@ -13,15 +13,17 @@ export default function Navbar() {
     const logout = async()=>{
 
         try {
-            let {data} =await axios.get('/api/user/logout')
-            if(data?.success){
+            let {data} =await axios.get('/api/user/logout', { withCredentials: true })
+                console.log(data);
+            if(data.success){
+                toast.success(data.message || "Logged out successfully")
                 setUser(null)
                 navigate('/')
             }
             
         } catch (error) {
             // console.error("Error during logout:", error);
-            toast.error("Failed to logout. Please try again.")
+            toast.error(error.message || "Something went wrong during logout");
             
         }
 
